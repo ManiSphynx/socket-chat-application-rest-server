@@ -10,8 +10,33 @@ class Server {
   }
 
   routes() {
-    this.app.get("/", (request, response) => {
-      response.send("hello world");
+    this.postMethods();
+    this.getMethods();
+    this.putMethods();
+    this.deleteMethods();
+  }
+
+  postMethods() {
+    this.app.post("/api", (request, response) => {
+      response.send("hello world post");
+    });
+  }
+
+  getMethods() {
+    this.app.get("/api", (request, response) => {
+      response.send("hello world get");
+    });
+  }
+
+  putMethods() {
+    this.app.put("/api", (request, response) => {
+      response.send("hello world put");
+    });
+  }
+
+  deleteMethods() {
+    this.app.delete("/api", (request, response) => {
+      response.send("hello world delete");
     });
   }
 
