@@ -1,46 +1,22 @@
 const express = require("express");
 const path = require("path");
+const cors = require("cors");
 
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+    this.usersPath = "/api/users";
     this.middlewares();
     this.routes();
   }
 
   routes() {
-    this.postMethods();
-    this.getMethods();
-    this.putMethods();
-    this.deleteMethods();
-  }
-
-  postMethods() {
-    this.app.post("/api", (request, response) => {
-      response.send("hello world post");
-    });
-  }
-
-  getMethods() {
-    this.app.get("/api", (request, response) => {
-      response.send("hello world get");
-    });
-  }
-
-  putMethods() {
-    this.app.put("/api", (request, response) => {
-      response.send("hello world put");
-    });
-  }
-
-  deleteMethods() {
-    this.app.delete("/api", (request, response) => {
-      response.send("hello world delete");
-    });
+    this.app.use(this.usersPath, require("../routes/user"));
   }
 
   middlewares() {
+    this.app.use(cors());
     this.app.use(express.static(path.join(__dirname, "../", "public")));
   }
 
