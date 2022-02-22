@@ -18,4 +18,11 @@ const existeEmail = async (correo = "") => {
   }
 };
 
-module.exports = { validarRol, existeEmail };
+const existeUsuario = async (id) => {
+  const existeUsuario = await Usuario.findById(id);
+  if (!existeUsuario) {
+    throw new Error(`El id ${id} no esta registrado en la base de datos`);
+  }
+};
+
+module.exports = { validarRol, existeEmail, existeUsuario };

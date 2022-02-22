@@ -1,17 +1,16 @@
 const { request, response } = require("express");
-const { createUserLogic } = require("../services/users");
+const { createUserLogic, updateUserLogic } = require("../services/users");
 
 const createUsers = async (req = request, res = response) => {
   try {
     const createUser = await createUserLogic(req, res);
 
-    if (createUser) {
-      res.json({
-        msg: "usuario creado con exito",
-        createUser,
-      });
-    }
+    res.status(201).json({
+      msg: "usuario creado con exito",
+      createUser,
+    });
   } catch (error) {
+    res.status(400).json({ msg: error });
     throw new Error(error);
   }
 };
@@ -21,9 +20,14 @@ const getUsers = (req = request, res = response) => {
   res.status(400).json({ msg: "que wea", q, nombre, apikey });
 };
 
-const updateUsers = (req = request, res = response) => {
-  const { id } = req.params;
-  res.status(400).json({ msg: "que wea", id });
+const updateUsers = async (req = request, res = response) => {
+  try {
+    const updateUser = await updateUserLogic(req, res);
+    res.status(200).json({ msg: "Usuario actualizado con exito", updateUser });
+  } catch (error) {
+    res.status(400).json({ msg: error });
+    throw new Error(error);
+  }
 };
 
 const deleteUsers = (req = request, res = response) => {
