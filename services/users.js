@@ -34,7 +34,23 @@ const updateUserLogic = async (request, response) => {
     });
 };
 
+const getUsersLogic = async (request) => {
+  try {
+    const { limite = 5, desde = 0 } = request.query;
+
+    if (Number(limite) && Number(desde)) {
+      return await Promise.all([
+        Usuario.find({ estado: true }).skip(Number(desde)).limit(Number(limite)),
+        Usuario.countDocuments({ estado: true }),
+      ]);
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 module.exports = {
   createUserLogic,
   updateUserLogic,
+  getUsersLogic,
 };

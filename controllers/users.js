@@ -1,5 +1,9 @@
 const { request, response } = require("express");
-const { createUserLogic, updateUserLogic } = require("../services/users");
+const {
+  createUserLogic,
+  updateUserLogic,
+  getUsersLogic,
+} = require("../services/users");
 
 const createUsers = async (req = request, res = response) => {
   try {
@@ -15,9 +19,12 @@ const createUsers = async (req = request, res = response) => {
   }
 };
 
-const getUsers = (req = request, res = response) => {
-  const { q, nombre, apikey } = req.query;
-  res.status(400).json({ msg: "que wea", q, nombre, apikey });
+const getUsers = async (req = request, res = response) => {
+  const getUsuarios = await getUsersLogic(req);
+  if (getUsuarios) {
+    const [listaUsuarios, totalUsuarios] = getUsuarios;
+    res.status(200).json({ totalUsuarios, listaUsuarios });
+  }
 };
 
 const updateUsers = async (req = request, res = response) => {
