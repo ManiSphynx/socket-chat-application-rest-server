@@ -8,7 +8,7 @@ const validarRol = async (rol = "") => {
   }
 };
 
-const existeEmail = async (correo) => {
+const existeEmail = async (correo = "") => {
   const existeEmail = await Usuario.findOne({ correo });
 
   if (existeEmail) {
