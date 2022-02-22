@@ -1,9 +1,19 @@
 const { request, response } = require("express");
+const { createUserLogic } = require("../services/users");
 
-const createUsers = (req = request, res = response) => {
-  const { nombre, edad } = req.body;
+const createUsers = async (req = request, res = response) => {
+  try {
+    const createUser = await createUserLogic(req);
 
-  res.status(400).json({ msg: "que wea", nombre, edad });
+    if (createUser) {
+      res.json({
+        msg: "usuario creado con exito",
+        createUser,
+      });
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 const getUsers = (req = request, res = response) => {
