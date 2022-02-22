@@ -3,7 +3,7 @@ const userController = ({
   createUsers,
   updateUsers,
   deleteUsers,
-} = require("../controllers/user"));
+} = require("../controllers/users"));
 
 module.exports = {
   userController,
