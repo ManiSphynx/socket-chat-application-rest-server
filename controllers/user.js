@@ -5,6 +5,7 @@ const createUsers = (req = request, res = response) => {
 
   res.status(400).json({ msg: "que wea", nombre, edad });
 };
+
 const getUsers = (req = request, res = response) => {
   const { q, nombre, apikey } = req.query;
   res.status(400).json({ msg: "que wea", q, nombre, apikey });
