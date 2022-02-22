@@ -1,8 +1,9 @@
 const { Router } = require("express");
 const { userController } = require("../controllers");
+const { validateUser } = require("../helpers/middlewareValidators");
 const router = Router();
 
-router.post("/", userController.createUsers);
+router.post("/", validateUser, userController.createUsers);
 
 router.get("/", userController.getUsers);
 

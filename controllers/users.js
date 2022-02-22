@@ -3,7 +3,7 @@ const { createUserLogic } = require("../services/users");
 
 const createUsers = async (req = request, res = response) => {
   try {
-    const createUser = await createUserLogic(req);
+    const createUser = await createUserLogic(req, res);
 
     if (createUser) {
       res.json({
