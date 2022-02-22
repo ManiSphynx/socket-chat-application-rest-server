@@ -20,4 +20,10 @@ const validateUpdateUser = [
   validarCampos,
 ];
 
-module.exports = { validateCreateUser, validateUpdateUser };
+const validateDeleteUser = [
+  check("id", "No es un id valido").isMongoId(),
+  check("id").custom(existeUsuario),
+  validarCampos,
+];
+
+module.exports = { validateCreateUser, validateUpdateUser, validateDeleteUser };

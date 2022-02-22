@@ -3,6 +3,7 @@ const {
   createUserLogic,
   updateUserLogic,
   getUsersLogic,
+  deleteUserLogic,
 } = require("../services/users");
 
 const createUsers = async (req = request, res = response) => {
@@ -37,8 +38,9 @@ const updateUsers = async (req = request, res = response) => {
   }
 };
 
-const deleteUsers = (req = request, res = response) => {
-  res.status(400).json({ msg: "que wea" });
+const deleteUsers = async (req = request, res = response) => {
+  await deleteUserLogic(req);
+  res.status(200).json({ msg: "Usuario Eliminado con exito" });
 };
 
 module.exports = {

@@ -43,14 +43,26 @@ const getUsersLogic = async (request) => {
         Usuario.find({ estado: true }).skip(Number(desde)).limit(Number(limite)),
         Usuario.countDocuments({ estado: true }),
       ]);
+    } else {
+      return await Promise.all([
+        Usuario.find({ estado: true }),
+        Usuario.countDocuments({ estado: true }),
+      ]);
     }
   } catch (error) {
     throw new Error(error);
   }
 };
 
+const deleteUserLogic = async (request) => {
+  const { id } = request.params;
+
+  return await Usuario.findByIdAndUpdate(id, { estado: false });
+};
+
 module.exports = {
   createUserLogic,
   updateUserLogic,
   getUsersLogic,
+  deleteUserLogic,
 };
