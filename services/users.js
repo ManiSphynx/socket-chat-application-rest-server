@@ -7,14 +7,6 @@ const createUserLogic = async (request, response) => {
     const usuario = new Usuario({ nombre, correo, password, rol });
 
     if (usuario) {
-      const existeEmail = await Usuario.findOne({ correo });
-
-      if (existeEmail) {
-        return response.status(400).json({
-          error: "El correo ya se encuentra registrado",
-        });
-      }
-
       usuario.password = passwordHash(password);
       await usuario.save();
     }

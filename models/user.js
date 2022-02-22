@@ -32,4 +32,12 @@ const userSchema = Schema({
   },
 });
 
+/* Removiendo el password y __v de la respuesta hacia el front */
+userSchema.methods.toJSON = function () {
+  const { __v, password, _id, ...user } = this.toObject();
+ /*  const id = _id;
+  user.id = id; */
+  return user;
+};
+
 module.exports = model("Usuario", userSchema);
