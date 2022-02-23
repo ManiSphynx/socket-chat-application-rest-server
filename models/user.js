@@ -35,8 +35,7 @@ const userSchema = Schema({
 /* Removiendo el password y __v de la respuesta hacia el front */
 userSchema.methods.toJSON = function () {
   const { __v, password, _id, ...user } = this.toObject();
-  const uid = _id;
-  user.uid = uid;
+  user.uid = _id;
   return user;
 };
 
