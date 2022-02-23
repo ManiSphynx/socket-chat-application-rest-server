@@ -26,4 +26,15 @@ const validateDeleteUser = [
   validarCampos,
 ];
 
-module.exports = { validateCreateUser, validateUpdateUser, validateDeleteUser };
+const validateLogin = [
+  check("correo", "El correo es obligatorio").isEmail(),
+  check("password", "El password es obligatorio").not().isEmpty(),
+  validarCampos,
+];
+
+module.exports = {
+  validateCreateUser,
+  validateUpdateUser,
+  validateDeleteUser,
+  validateLogin,
+};
