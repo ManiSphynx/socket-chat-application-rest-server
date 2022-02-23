@@ -16,11 +16,14 @@ const login = async (req = request, res = response) => {
 
 const googleLogin = async (req = request, res = response) => {
   try {
-    const google = googleLoginLogic(req, res);
-    res.json({ msg: "ok", google });
+    const { usuario, token } = await googleLoginLogic(req, res);
+
+    if (usuario && token) {
+      res.status(200).json({ usuario, token });
+    }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ mgs: "No se pudo iniciar sesión" });
+    res.status(500).json({ mgs: "No se pudo iniciar sesión con Google" });
   }
 };
 
