@@ -1,5 +1,5 @@
 const { request, response } = require("express");
-const { loginLogic } = require("../services/auth");
+const { loginLogic, googleLoginLogic } = require("../services/auth");
 
 const login = async (req = request, res = response) => {
   try {
@@ -14,6 +14,17 @@ const login = async (req = request, res = response) => {
   }
 };
 
+const googleLogin = async (req = request, res = response) => {
+  try {
+    const google = googleLoginLogic(req, res);
+    res.json({ msg: "ok", google });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ mgs: "No se pudo iniciar sesión" });
+  }
+};
+
 module.exports = {
   login,
+  googleLogin,
 };

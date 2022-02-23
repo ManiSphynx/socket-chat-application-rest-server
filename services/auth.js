@@ -30,6 +30,12 @@ const loginLogic = async (request, response) => {
   }
 };
 
+const googleLoginLogic = (request) => {
+  const { id_token } = request.body;
+  return id_token;
+};
+
 module.exports = {
   loginLogic,
+  googleLoginLogic,
 };

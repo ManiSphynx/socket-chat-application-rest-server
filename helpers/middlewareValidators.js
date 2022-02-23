@@ -32,9 +32,15 @@ const validateLogin = [
   validarCampos,
 ];
 
+const validateGoogleLogin = [
+  check("id_token", "El token es obligatorio").not().isEmpty(),
+  validarCampos,
+];
+
 module.exports = {
   validateCreateUser,
   validateUpdateUser,
   validateDeleteUser,
   validateLogin,
+  validateGoogleLogin,
 };
