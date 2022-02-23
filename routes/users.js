@@ -1,26 +1,33 @@
 const { Router } = require("express");
-const { userController } = require("../controllers");
+const router = Router();
+
+/* Validators and Middleware importations */
+const {
+  getUsers,
+  createUsers,
+  updateUsers,
+  deleteUsers,
+} = require("../controllers");
 const {
   validateCreateUser,
   validateUpdateUser,
   validateDeleteUser,
 } = require("../helpers/middlewareValidators");
-const validateJWT = require("../middlewares/validate-jwt");
-const { onlyAdminRole, haveRol } = require("../middlewares/validate-rol");
-const router = Router();
+const { onlyAdminRole, haveRol, validateJWT } = require("../middlewares");
 
-router.post("/", validateCreateUser, userController.createUsers);
+/* Routes definitions */
+router.post("/", validateCreateUser, createUsers);
 
-router.get("/", userController.getUsers);
+router.get("/", getUsers);
 
-router.put("/:id", validateUpdateUser, userController.updateUsers);
+router.put("/:id", validateUpdateUser, updateUsers);
 
 router.delete(
   "/:id",
   validateJWT,
   onlyAdminRole,
   validateDeleteUser,
-  userController.deleteUsers
+  deleteUsers
 );
 
 module.exports = router;

@@ -38,4 +38,4 @@ const validateJWT = async (request, response, next) => {
   }
 };
 
-module.exports = validateJWT;
+module.exports = { validateJWT };

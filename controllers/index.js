@@ -8,6 +8,6 @@ const userController = ({
 const loginController = ({ login } = require("../controllers/auth"));
 
 module.exports = {
-  userController,
-  loginController,
+  ...userController,
+  ...loginController,
 };
