@@ -19,6 +19,7 @@ const onlyAdminRole = (request, response, next) => {
   next();
 };
 
+/* TODO: REFACTORIZAR ESTA FUNCION PARA QUE TOME LAS COLECCIONES DE LOS ROLES DE LA BASE DE DATOS */
 const haveRol = (...roles) => {
   return (request, response, next) => {
     if (!request.usuario) {
