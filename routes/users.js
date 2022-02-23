@@ -6,7 +6,7 @@ const {
   validateDeleteUser,
 } = require("../helpers/middlewareValidators");
 const validateJWT = require("../middlewares/validate-jwt");
-const { onlyAdminRole } = require("../middlewares/validate-rol");
+const { onlyAdminRole, haveRol } = require("../middlewares/validate-rol");
 const router = Router();
 
 router.post("/", validateCreateUser, userController.createUsers);
