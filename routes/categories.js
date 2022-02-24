@@ -1,4 +1,7 @@
 const { Router } = require("express");
+const { validateJWT } = require("../middlewares");
+const { createCategory } = require("../controllers");
+const { validateCategory } = require("../helpers/middlewareValidators");
 const router = Router();
 
 /* Routes definitions */
@@ -10,7 +13,7 @@ router.get("/", (req, res) => console.log("work"));
 router.get("/:id", (req, res) => console.log("work"));
 
 // post  crear categoia -privado solo con token
-router.post("/", (req, res) => console.log("work"));
+router.post("/", validateJWT, validateCategory, createCategory);
 
 //PUT:id actualizar registro por id privado cualquiera con token valido
 router.put("/:id", (req, res) => console.log("work"));

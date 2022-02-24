@@ -37,10 +37,16 @@ const validateGoogleLogin = [
   validarCampos,
 ];
 
+const validateCategory = [
+  check("nombre", "El nombre es obligatorio").not().isEmpty(),
+  validarCampos,
+];
+
 module.exports = {
   validateCreateUser,
   validateUpdateUser,
   validateDeleteUser,
   validateLogin,
   validateGoogleLogin,
+  validateCategory
 };
