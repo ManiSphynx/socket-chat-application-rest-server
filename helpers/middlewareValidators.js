@@ -1,5 +1,6 @@
 const { check } = require("express-validator");
 const { validarCampos } = require("../middlewares/validate");
+const existeCategoria = require("../middlewares/validate-category");
 const { validarRol, existeEmail, existeUsuario } = require("./dbValidators");
 
 const validateCreateUser = [
@@ -42,11 +43,18 @@ const validateCategory = [
   validarCampos,
 ];
 
+const validateCategoryID = [
+  check("id", "No es un id valido").isMongoId(),
+  check("id").custom(existeCategoria),
+  validarCampos,
+];
+
 module.exports = {
   validateCreateUser,
   validateUpdateUser,
   validateDeleteUser,
   validateLogin,
   validateGoogleLogin,
-  validateCategory
+  validateCategory,
+  validateCategoryID,
 };

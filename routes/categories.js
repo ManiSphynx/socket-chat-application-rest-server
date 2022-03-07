@@ -1,24 +1,29 @@
 const { Router } = require("express");
-const { validateJWT } = require("../middlewares");
-const { createCategory } = require("../controllers");
-const { validateCategory } = require("../helpers/middlewareValidators");
+const { validateJWT, onlyAdminRole } = require("../middlewares");
+const {
+  createCategory,
+  GetAllCategories,
+  GetCategoryById,
+  updateCategory,
+  deleteCategory,
+} = require("../controllers");
+const {
+  validateCategory,
+  validateCategoryID,
+} = require("../helpers/middlewareValidators");
 const router = Router();
 
 /* Routes definitions */
-
-// Obtener todas las categorias - publico get
-router.get("/", (req, res) => console.log("work"));
-
-//get:id obtener una sola categoria por id - publico
-router.get("/:id", (req, res) => console.log("work"));
-
-// post  crear categoia -privado solo con token
+router.get("/", GetAllCategories);
+router.get("/:id", validateCategoryID, GetCategoryById);
 router.post("/", validateJWT, validateCategory, createCategory);
-
-//PUT:id actualizar registro por id privado cualquiera con token valido
-router.put("/:id", (req, res) => console.log("work"));
-
-//DELETE:id borrar una categoria solo usuarios administrado marcar estado de activo a inactivo
-router.delete("/:id", (req, res) => console.log("work"));
+router.put("/:id", validateJWT, validateCategoryID, updateCategory);
+router.delete(
+  "/:id",
+  validateJWT,
+  onlyAdminRole,
+  validateCategoryID,
+  deleteCategory
+);
 
 module.exports = router;
