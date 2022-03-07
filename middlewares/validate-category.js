@@ -6,8 +6,6 @@ const existeCategoria = async (id) => {
   if (!categoriaDB) {
     throw new Error("El id no es valido");
   }
-
-  return categoriaDB;
 };
 
 module.exports = existeCategoria;

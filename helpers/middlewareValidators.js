@@ -1,6 +1,7 @@
 const { check } = require("express-validator");
 const { validarCampos } = require("../middlewares/validate");
 const existeCategoria = require("../middlewares/validate-category");
+const existeProducto = require("../middlewares/validate-product");
 const { validarRol, existeEmail, existeUsuario } = require("./dbValidators");
 
 const validateCreateUser = [
@@ -48,6 +49,17 @@ const validateCategoryID = [
   check("id").custom(existeCategoria),
   validarCampos,
 ];
+const validateProduct = [
+  check("nombre", "El nombre es obligatorio").not().isEmpty(),
+  check("categoria", "La categoria es obligatoria").not().isEmpty(),
+  validarCampos,
+];
+
+const validateProductID = [
+  check("id", "No es un id valido").isMongoId(),
+  check("id").custom(existeProducto),
+  validarCampos,
+];
 
 module.exports = {
   validateCreateUser,
@@ -57,4 +69,6 @@ module.exports = {
   validateGoogleLogin,
   validateCategory,
   validateCategoryID,
+  validateProduct,
+  validateProductID,
 };
