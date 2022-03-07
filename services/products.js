@@ -45,8 +45,8 @@ const getAllProductsLogic = async () => {
   try {
     return await Promise.all([
       Producto.find({ estado: true })
-        .populate("usuario", "nombre", "Usuario", "estado:true")
-        .populate("categoria", "nombre", "Categoria", "estado:true"),
+        .populate("usuario", "nombre", "Usuario")
+        .populate("categoria", "nombre", "Categoria"),
       Producto.countDocuments({ estado: true }),
     ]);
   } catch (error) {
@@ -67,29 +67,63 @@ const getProductLogic = async (id, response) => {
 
     return await Producto.findById(id)
       .populate("usuario", "nombre", "Usuario")
-      .populate("categoria", "nombre", "Categoria")
-      .exec();
+      .populate("categoria", "nombre", "Categoria");
   } catch (error) {
     console.log(error);
   }
 };
 
 const updateProductLogic = async (req, res) => {
+  const _id = req.params.id;
   const nombre = req.body.nombre.toUpperCase();
-  const id = req.params.id;
+  const precio = req.body?.precio;
+  const categoria = req.body.categoria.toUpperCase();
+  const descripcion = req.body?.descripcion;
   try {
-    const productoDB = await Producto.findById(id);
+    let productoDB = await Producto.findById({ _id });
+    const productoDBDuplicate = await Producto.findOne({ nombre });
+    const categoriaDB = await Categoria.findOne({ nombre: categoria });
+
+    if (
+      productoDBDuplicate?.nombre === nombre &&
+      productoDBDuplicate?.precio === precio &&
+      productoDBDuplicate?.categoria._id.toString() ===
+        categoriaDB._id.toString() &&
+      productoDBDuplicate?.descripcion === descripcion
+    ) {
+      res.status(400).json({
+        msg: "Ya existe este producto",
+      });
+      return;
+    }
+
+    if (!categoriaDB || categoriaDB.estado === false) {
+      res.status(400).json({
+        msg: "La categoria no existe",
+      });
+      return;
+    }
 
     if (!productoDB || productoDB.estado === false) {
-      response.status(400).json({
+      res.status(400).json({
         msg: "El producto no existe",
       });
       return;
     }
 
-    const producto = await Producto.findOneAndUpdate({ id }, { nombre });
+    const producto = await Producto.findByIdAndUpdate(_id, {
+      nombre,
+      precio,
+      descripcion,
+      categoria: categoriaDB._id,
+      usuario: req.usuario._id,
+    });
 
-    return producto;
+    const newProducto = await Producto.findById(producto._id)
+      .populate("usuario", "nombre", "Usuario")
+      .populate("categoria", "nombre", "Categoria");
+
+    return newProducto;
   } catch (error) {
     console.log(error);
   }
