@@ -20,9 +20,12 @@ const productController = ({
   GetAllProducts,
 } = require("../controllers/products"));
 
+const searchController = ({ search } = require("../controllers/search"));
+
 module.exports = {
   ...userController,
   ...loginController,
   ...categoryController,
   ...productController,
+  ...searchController,
 };
