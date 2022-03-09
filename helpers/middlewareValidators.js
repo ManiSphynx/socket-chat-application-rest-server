@@ -1,5 +1,8 @@
 const { check } = require("express-validator");
-const { validarCampos } = require("../middlewares/validate");
+const {
+  validarCampos,
+  coleccionesPermitidas,
+} = require("../middlewares/validate");
 const existeCategoria = require("../middlewares/validate-category");
 const existeProducto = require("../middlewares/validate-product");
 const { validarRol, existeEmail, existeUsuario } = require("./dbValidators");
@@ -61,6 +64,14 @@ const validateProductID = [
   validarCampos,
 ];
 
+const validateUpdateFile = [
+  check("id", "No es un id valido").isMongoId(),
+  check("coleccion").custom((c) =>
+    coleccionesPermitidas(c, ["usuarios", "productos"])
+  ),
+  validarCampos,
+];
+
 module.exports = {
   validateCreateUser,
   validateUpdateUser,
@@ -71,4 +82,5 @@ module.exports = {
   validateCategoryID,
   validateProduct,
   validateProductID,
+  validateUpdateFile,
 };
