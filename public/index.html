@@ -39,38 +39,33 @@
         <button id="google-signout">Signout</button>
       </div>
 
-      <div class="col-sm 6"></div>
+      <div class="col-sm 6">
+        <h1>Login</h1>
+        <hr />
+
+        <form class="d-grid"> 
+          <input
+            type="text"
+            name="correo"
+            id=""
+            class="form-control mb-2"
+            placeholder="Correo"
+          />
+          <input
+            type="text"
+            name="password"
+            id=""
+            class="form-control mb-2"
+            placeholder="Password"
+          />
+
+          <button type="submit" class="btn btn-primary">Ingresar</button>
+        </form>
+      </div>
     </div>
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-    <script>
-      function handleCredentialResponse(response) {
-        const body = { id_token: response.credential };
-
-        fetch("http://localhost:3000/api/auth/google", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        })
-          .then((resp) => resp.json())
-          .then((resp) => {
-            localStorage.setItem("email", resp.usuario.correo);
-          })
-          .catch(console.warn);
-      }
-
-      const boton = document.getElementById("google-signout");
-      boton.onclick = () => {
-        google.accounts.id.disableAutoSelect();
-
-        google.accounts.id.revoke(localStorage.getItem("email"), (done) => {
-          localStorage.clear();
-          location.reload();
-        });
-      };
-    </script>
+    <script src="./js/auth.js"></script>
   </body>
 </html>
