@@ -4,7 +4,7 @@ const {
   loginConstants,
   unauthorizedUser,
 } = require("../constants/constantsLibrary");
-const jwt = require("../helpers/jwtGenerator");
+const { jwt } = require("../helpers/jwtGenerator");
 const { googleVerify } = require("../helpers/google-verify");
 
 const loginLogic = async (request, response) => {
