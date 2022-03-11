@@ -82,7 +82,15 @@ const googleLoginLogic = async (request, response) => {
   }
 };
 
+const refreshLogic = async (request) => {
+  const { usuario } = request;
+  const token = await jwt(usuario.id);
+
+  return { usuario, token };
+};
+
 module.exports = {
   loginLogic,
   googleLoginLogic,
+  refreshLogic,
 };

@@ -1,5 +1,9 @@
 const { request, response } = require("express");
-const { loginLogic, googleLoginLogic } = require("../services/auth");
+const {
+  loginLogic,
+  googleLoginLogic,
+  refreshLogic,
+} = require("../services/auth");
 
 const login = async (req = request, res = response) => {
   try {
@@ -27,7 +31,19 @@ const googleLogin = async (req = request, res = response) => {
   }
 };
 
+const tokenRefresh = async (req = request, res = response) => {
+  try {
+    const user = await refreshLogic(req, res);
+
+    res.status(200).json({ message: "success", user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ mgs: "No se pudo renovar el token" });
+  }
+};
+
 module.exports = {
   login,
   googleLogin,
+  tokenRefresh,
 };
